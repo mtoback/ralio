@@ -2,7 +2,7 @@
 
 A *usable* command-line client for rally.
 
-[![Build Status](https://travis-ci.org/oesmith/ralio.png)](https://travis-ci.org/oesmith/ralio)
+[![Build Status](https://travis-ci.org/mtoback/ralio.png)](https://travis-ci.org/mtoback/ralio)
 
 ## Installation
 

@@ -7,7 +7,7 @@ require('sinon-mocha').enhance(sinon);
 
 var RALLY_HOST = "rally1.rallydev.com",
     RALLY_SERVER = "https://" + RALLY_HOST,
-    RALLY_BULK_PATH = "/slm/webservice/" + version + "/adhoc.js";
+    RALLY_BULK_PATH = "/slm/webservice/" + rally_version + "/adhoc.js";
 
 describe('Ralio', function () {
 
