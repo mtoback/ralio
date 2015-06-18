@@ -2,10 +2,10 @@
 
 var program = require('commander'),
     CLI = require('../lib/cli');
-var package = require('../package.json');
+var package_json = require('../package.json');
 
 program
-  .version(package.version)
+  .version(package_json.version)
   .option('-H, --host [host]','Rally host that will be used for all commands')
 
 program
@@ -111,9 +111,12 @@ program
     var ralio_configuration = {};
     program.prompt('Type your Rally\'s username: ', function(username){
       ralio_configuration.username = username;
-      
+
       program.password('Type your Rally\'s password: ', '*', function(password){
         ralio_configuration.password = password;
+
+          program.prompt('Type your Rally\'s version: ', function(version){
+            ralio_configuration.version = version;
 
          program.prompt('Type your Rally\'s project: ', function(project){
           ralio_configuration.project = project;
@@ -131,6 +134,7 @@ program
             process.stdin.destroy();
           }); 
         });
+      });
       });
     });
   });

@@ -1,13 +1,13 @@
 var assert = require('assert'),
     nock = require('nock'),
     sinon = require('sinon'),
-    Ralio = require('../lib/ralio');
-
+    Ralio = require('../lib/ralio'),
+    rally_version = '1.42';
 require('sinon-mocha').enhance(sinon);
 
 var RALLY_HOST = "rally1.rallydev.com",
     RALLY_SERVER = "https://" + RALLY_HOST,
-    RALLY_BULK_PATH = "/slm/webservice/1.42/adhoc.js";
+    RALLY_BULK_PATH = "/slm/webservice/" + version + "/adhoc.js";
 
 describe('Ralio', function () {
 
@@ -16,7 +16,7 @@ describe('Ralio', function () {
   });
 
   beforeEach(function () {
-    this.ralio = new Ralio(RALLY_SERVER, 'user1', 'password1');
+    this.ralio = new Ralio(RALLY_SERVER, 'user1', 'password1', rally_version);
   });
 
   afterEach(function () {
@@ -1240,7 +1240,7 @@ describe('#task', function() {
         var story_request = ralio_mock.expects('story').withArgs('US1234');
 
         var options = {
-          url: this.ralio.bulkUrl({"pathname":"/slm/webservice/1.42/task/create.js"}),
+          url: this.ralio.bulkUrl({"pathname":"/slm/webservice/" + rally_version + "/task/create.js"}),
           method: 'POST',
           json: {
             Task: {
@@ -1278,7 +1278,7 @@ describe('#task', function() {
         var story_request = ralio_mock.expects('story').withArgs('US1234');
 
         var options = {
-          url: this.ralio.bulkUrl({"pathname":"/slm/webservice/1.42/task/create.js"}),
+          url: this.ralio.bulkUrl({"pathname":"/slm/webservice/" + rally_version + "/task/create.js"}),
           method: 'POST',
           json: {
             Task: {
