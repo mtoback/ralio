@@ -5,7 +5,7 @@ var assert = require('assert'),
     rally_version = '1.42';
 require('sinon-mocha').enhance(sinon);
 
-var RALLY_HOST = "rally1.rallydev.com",
+var RALLY_HOST = "demo-west.rallydev.com",
     RALLY_SERVER = "https://" + RALLY_HOST,
     RALLY_BULK_PATH = "/slm/webservice/" + rally_version + "/adhoc.js";
 
@@ -16,7 +16,7 @@ describe('Ralio', function () {
   });
 
   beforeEach(function () {
-    this.ralio = new Ralio(RALLY_SERVER, 'user1', 'password1', rally_version);
+    this.ralio = new Ralio(RALLY_SERVER, '2015@hackathon.com', 'hackathon2015', rally_version);
   });
 
   afterEach(function () {
