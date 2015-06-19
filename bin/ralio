@@ -78,8 +78,13 @@ program
   .action(function (option, item, message, opts) { new CLI(opts.parent.host).discuss(option, item, message, opts); });
 
 program
+  .command('me')
+  .description('Show your current tasks and defects in current iteration')
+  .action(function (opts) { new CLI(opts.parent.host).me() });
+
+program
   .command('current')
-  .description('Show your current tasks and stories')
+  .description('Show the current active tasks and defects in current iteration')
   .action(function (opts) { new CLI(opts.parent.host).current() });
 
 program
@@ -168,9 +173,17 @@ program.on('--help', function(){
   console.log('    $ ralio finish DE1234');
   console.log('    $ ralio finish DE1234 --rootcause "Code Design/Error" --resolution "Code Change"');
   console.log('');
-  console.log('  Finishin a task:');
+  console.log('  Finishing a task:');
   console.log('');
   console.log('    $ ralio finish TA1234');
+  console.log('');
+  console.log('  View of current stories, tasks and defects active in current iteration:');
+  console.log('');
+  console.log('    $ ralio current');
+  console.log('');
+  console.log('  View of current stories, tasks and defects assigned to me:');
+  console.log('');
+  console.log('    $ ralio me');
   console.log('');
   console.log('  Punctuating a story or defect:');
   console.log('');
