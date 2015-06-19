@@ -6,7 +6,7 @@ var package_json = require('../package.json');
 
 program
   .version(package_json.version)
-  .option('-H, --host [host]','Rally host that will be used for all commands')
+  .option('-H, --host [host]','xRally host that will be used for all commands')
 
 program
   .command('backlog')
@@ -109,32 +109,41 @@ program
   .action(function (opts) { 
 
     var ralio_configuration = {};
-    program.prompt('Type your Rally\'s username: ', function(username){
-      ralio_configuration.username = username;
 
-      program.password('Type your Rally\'s password: ', '*', function(password){
-        ralio_configuration.password = password;
+    var defhost='https://rally1.rallydev.com';
+    program.prompt('Type your Rally\'s hostname [default: '+defhost+']: ', function(hostname){
+      if (!hostname) {
+        hostname = defhost;
+      }
+      ralio_configuration.hostname = hostname;
 
+      program.prompt('Type your Rally\'s username: ', function(username){
+        ralio_configuration.username = username;
+    
+        program.password('Type your Rally\'s password: ', '*', function(password){
+          ralio_configuration.password = password;
+    
           program.prompt('Type your Rally\'s version: ', function(version){
             ralio_configuration.version = version;
-
-         program.prompt('Type your Rally\'s project: ', function(project){
-          ralio_configuration.project = project;
-
-          program.prompt('Type your Rally\'s team: ', function(team){
-            ralio_configuration.team = team;
-
-            var fs = require('fs'),
-                path = require('path');
-
-            fs.writeFile(path.join(process.env.HOME, '.raliorc'), JSON.stringify(ralio_configuration), function(err) {
-              err ? console.log(err) : console.log("All set! :)".green);
-            }); 
-
-            process.stdin.destroy();
-          }); 
+    
+            program.prompt('Type your Rally\'s project: ', function(project){
+              ralio_configuration.project = project;
+    
+              program.prompt('Type your Rally\'s team: ', function(team){
+                ralio_configuration.team = team;
+    
+                var fs = require('fs'),
+                  path = require('path');
+    
+                fs.writeFile(path.join(process.env.HOME, '.raliorc'), JSON.stringify(ralio_configuration), function(err) {
+                  err ? console.log(err) : console.log("All set! :)".green);
+                }); 
+    
+                process.stdin.destroy();
+              }); 
+            });
+          });
         });
-      });
       });
     });
   });

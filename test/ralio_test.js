@@ -2,7 +2,10 @@ var assert = require('assert'),
     nock = require('nock'),
     sinon = require('sinon'),
     Ralio = require('../lib/ralio'),
-    rally_version = '1.42';
+    rally_version = '1.43',
+    test_user = '2015@hackathon.com',
+    test_password = 'hackathon2015',
+    project = "Online Store";
 require('sinon-mocha').enhance(sinon);
 
 var RALLY_HOST = "demo-west.rallydev.com",
@@ -16,7 +19,7 @@ describe('Ralio', function () {
   });
 
   beforeEach(function () {
-    this.ralio = new Ralio(RALLY_SERVER, '2015@hackathon.com', 'hackathon2015', rally_version);
+    this.ralio = new Ralio(RALLY_SERVER, test_user, test_password, rally_version);
   });
 
   afterEach(function () {
@@ -41,10 +44,10 @@ describe('Ralio', function () {
 
   describe('#rallyWsapiUrl', function () {
      it('should insert auth credentials', function () {
-      var url = 'https://user1:password1@' + RALLY_HOST;
+      var url = 'https://' + test_user.replace("@","%40") + ":" + test_password + '@' + RALLY_HOST;
       var len = url.length;
        assert.equal(
-        this.ralio.rallyWsapiUrl().substring(0, len),
+        this.ralio.rallyWsapiUrl('adhoc', {}, {}).substring(0, len),
         url);
     });
   });
@@ -367,7 +370,7 @@ describe('Ralio', function () {
   describe('#story', function () {
     it('should return a error message when anything different of US or DE were passed', function(){
        this.ralio.story('XD321', function (error, story) {
-          assert.equal(error, "Ralio's can only show detailed information of a defect(DE), story(US) or tasks(TA).");
+          assert.equal(error, "Ralio's can only show detailed information of a defect(DE), story(US) or task(TA).");
        });
     });
 
@@ -1238,7 +1241,6 @@ describe('#task', function() {
         var ralio_mock = sinon.mock(this.ralio);
         var tag_request = ralio_mock.expects('getTags').withArgs([]);
         var story_request = ralio_mock.expects('story').withArgs('US1234');
-
         var options = {
           url: this.ralio.bulkUrl({"pathname":"/slm/webservice/" + rally_version + "/task/create.js"}),
           method: 'POST',
@@ -1252,7 +1254,7 @@ describe('#task', function() {
               Tags: []
             }
           },
-          strictSSL: !Ralio.test
+          strictSSL: false
         };
 
         var mock_request = ralio_mock.expects('request').withArgs(options);
@@ -1276,7 +1278,6 @@ describe('#task', function() {
         var ralio_mock = sinon.mock(this.ralio);
         var tag_request = ralio_mock.expects('getTags').withArgs(['BLUE TASK']);
         var story_request = ralio_mock.expects('story').withArgs('US1234');
-
         var options = {
           url: this.ralio.bulkUrl({"pathname":"/slm/webservice/" + rally_version + "/task/create.js"}),
           method: 'POST',
@@ -1323,7 +1324,7 @@ describe('#task', function() {
 
         var mock_request = ralio_mock.expects('request').withArgs(options);
 
-        this.ralio.deleteTask('hokage', 'TA1234', function(task) {
+        this.ralio.deleteTask('hokage', 'TA1234', "https://user1:password1@rally1.rallydev.com", function(task) {
           assert(task, 'TA1234 deleted');
         });
 
