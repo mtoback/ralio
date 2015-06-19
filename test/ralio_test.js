@@ -170,7 +170,6 @@ describe('Ralio', function () {
       );
     });
   });
-
   describe('#backlog', function () {
     it('should fetch the backlog stories for a given project', function (done) {
       var query = {

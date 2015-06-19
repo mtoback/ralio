@@ -35,6 +35,7 @@
     "cli-table": "0.0.2",
     "temp": "0.4.0",
     "editor": "0.0.4",
+    "promisejs": "0.1.3",
     "xml2js": "0.4.9"
   },
   "devDependencies": {
