@@ -175,7 +175,7 @@ describe('Ralio', function () {
       var query = {
         fetch: 'Name,FormattedID,Rank,PlanEstimate,Tags',
         order: 'Rank',
-        query: '((Project.Name = "project1") AND (Iteration = NULL))',
+        query: '(((( Project.Name = "project1") AND (Iteration = NULL)) AND (Release = NULL)) AND (DirectChildrenCount = 0))',
         pagesize: 16
       };
       var query_result = {
@@ -229,7 +229,7 @@ describe('Ralio', function () {
       var query = {
         fetch: 'Name,FormattedID,Rank,PlanEstimate,Tags',
         order: 'Rank',
-        query: '((Project.Name = "project1") AND ((Iteration = NULL) AND (Tags.Name = "tag1")))',
+        query: '(((((Project.Name = "project1") AND (Iteration = NULL)) AND (Release = NULL)) AND (DirectChildrenCount = 0)) AND (Tags.Name = "tag1"))',
         pagesize: 16
       };
       var query_result = {
